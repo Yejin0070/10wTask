@@ -1,21 +1,28 @@
 import "../common.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import axios from "axios";
 
+const fetchShops = async () => {
+  const { data } = await axios.get("https://api.stage.koreatech.in/shops");
+  return data?.shops || [];
+};
+
 export default function Total() {
-  const [shops, setShops] = useState([]);
+  // const [shops, setShops] = useState([]);
+  const { data: shops = [] } = useQuery("shops", fetchShops);
   const [category, setCategory] = useState("all");
 
-  useEffect(() => {
-    axios
-      .get("https://api.stage.koreatech.in/shops")
-      .then((res) => {
-        console.log(res.data);
-        setShops(res.data?.shops || []);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("https://api.stage.koreatech.in/shops")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setShops(res.data?.shops || []);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const filterShops = () => {
     if (category === "all") {

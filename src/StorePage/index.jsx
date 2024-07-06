@@ -1,22 +1,33 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import axios from "axios";
 import "../common.css";
 
+const fetchStoreDetails = async (id) => {
+  const { data } = await axios.get(
+    `https://api.stage.koreatech.in/shops/${id}`
+  );
+  return data;
+};
+
 export default function StorePage() {
   const { id } = useParams();
-  const [storeDetails, setStoreDetails] = useState(null);
+  // const [storeDetails, setStoreDetails] = useState(null);
+  const { data: storeDetails } = useQuery(["storeDetails", id], () =>
+    fetchStoreDetails(id)
+  );
 
-  useEffect(() => {
-    axios
-      .get(`https://api.stage.koreatech.in/shops/${id}`)
-      .then((res) => {
-        setStoreDetails(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`https://api.stage.koreatech.in/shops/${id}`)
+  //     .then((res) => {
+  //       setStoreDetails(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, [id]);
 
   return (
     <div className="store-details">
