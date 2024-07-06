@@ -20,12 +20,12 @@ export default function StorePage() {
 
   return (
     <div className="store-details">
-      <h3>{storeDetails.name}</h3>
-      <p>Phone: {storeDetails.phone}</p>
-      <p>Address: {storeDetails.address}</p>
+      <h3>{storeDetails?.name}</h3>
+      <p>Phone: {storeDetails?.phone}</p>
+      <p>Address: {storeDetails?.address}</p>
       <p>Opening Hours:</p>
       <ul>
-        {storeDetails.open.map((hour, index) => (
+        {storeDetails?.open?.map((hour, index) => (
           <li key={index}>
             {hour.day_of_week}: {hour.open_time} - {hour.close_time}
           </li>
